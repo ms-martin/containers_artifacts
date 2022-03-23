@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips
+spec:
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - name: trips
+        image: registrynty7256.azurecr.io/tripapi:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+        - name: SQL_USER
+          value: ""
+        - name: SQL_PASSWORD
+          value: ""
+        - name: SQL_SERVER
+          value: ""
+        - name: SQL_DBNAME
+          value: ""
