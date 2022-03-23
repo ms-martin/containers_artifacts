@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi
+spec:
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - name: poi
+        image: registrynty7256.azurecr.io/poi:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+        - name: SQL_SERVER
+          value: sqlservernty7256.database.windows.net
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poi-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: poi
